@@ -11,8 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
-          <!-- ADD THIS IN THE <body> (anywhere near the top is fine) -->
-<audio id="bg-music" src="music.mp3" loop></audio>
+          <audio id="bg-music" src="assets/music.mp3" loop></audio>
 
             margin: 0;
             overflow: hidden;
@@ -413,7 +412,7 @@
       currentStep = 2;
       showStep(currentStep);
     });
-
+});
         document.getElementById('next-btn-2').addEventListener('click', () => {
             currentStep = 3;
             showStep(currentStep);
@@ -494,6 +493,7 @@
 
 
 </html>
+
 
 
 
