@@ -140,7 +140,7 @@
             position: fixed;
             top: 20px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); 
             width: 80%;
             max-width: 400px;
             height: 6px;
@@ -220,6 +220,8 @@
             transition:
                 opacity 0.6s,
                 transform 0.6s;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 18px rgba(236,72,153,0.18);
         }
         @media (max-width: 900px) {
             .floating-collage-img {
@@ -485,15 +487,12 @@
 
         // Collage image grid placement (no overlap, centered)
         function getGridInfo(num) {
-            // Try to keep the grid as square as possible
             let cols = Math.ceil(Math.sqrt(num));
             let rows = Math.ceil(num / cols);
-            // For 9 images: 3x3, for 8: 3x3, for 7: 3x3, for 6: 3x2, etc.
             return {cols, rows};
         }
 
-        // You can use any file types you want, but make sure the files exist!
-        // If you have missing images, fix the file names here.
+        // Use these images for the collage
         const collagePhotos = [
             { src: "a1.jpg", alt: "memory 1" },
             { src: "a2.jpg", alt: "memory 2" },
@@ -510,7 +509,6 @@
         const floatingMsg = document.getElementById('floating-collage-message');
         const floatingGrid = document.getElementById('floating-collage-grid');
 
-        // Position the overlay just below the "Made with" line, even on mobile
         function positionFloatingCollage() {
             const madeWith = document.getElementById("final-made-with");
             if (!madeWith) return;
@@ -526,22 +524,18 @@
         window.addEventListener('resize', positionFloatingCollage);
 
         function runFloatingCollage() {
-            // Remove previous images
             floatingGrid.innerHTML = "";
             floatingMsg.style.opacity = 0;
-            floatingMsg.style.transition = 'opacity 0.1s'; // instant hide for next use
+            floatingMsg.style.transition = 'opacity 0.1s';
             floatingMsg.style.background = 'white';
             floatingCollage.style.display = 'block';
 
-            // Set grid columns dynamically
             const gridInfo = getGridInfo(collagePhotos.length);
             floatingGrid.style.display = "grid";
             floatingGrid.style.gridTemplateColumns = `repeat(${gridInfo.cols}, 1fr)`;
             floatingGrid.style.gap = window.innerWidth < 600 ? "12px" : "28px 26px";
-            // Position the collage just below "Made with..."
             positionFloatingCollage();
 
-            // Add images to the grid, animate in
             let i = 0;
             function showNext() {
                 if (i < collagePhotos.length) {
@@ -566,7 +560,6 @@
                     i++;
                     setTimeout(showNext, 170);
                 } else {
-                    // after all popped in, show message
                     setTimeout(() => {
                         floatingMsg.innerText = "I love you so much! :)..Don't you?!❤️";
                         floatingMsg.style.opacity = 0;
@@ -574,14 +567,12 @@
                         setTimeout(() => {
                             floatingMsg.style.opacity = 1;
                         }, 80);
-                        // Do NOT hide message or collage anymore
                     }, 700);
                 }
             }
             showNext();
         }
 
-        // Celebrate button triggers
         document.getElementById('confetti-btn').addEventListener('click', () => {
             confetti({
                 particleCount: 150,
@@ -628,7 +619,7 @@
                     ease: "power1.out"
                 });
             });
-            setTimeout(runFloatingCollage, 1200); // Show floating collage after confetti
+            setTimeout(runFloatingCollage, 1200);
         });
     </script>
 </body>
