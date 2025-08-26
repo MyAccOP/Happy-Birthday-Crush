@@ -396,19 +396,19 @@ function showStep(stepNumber) {
 
 // ✅ FIXED EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('start-btn').addEventListener('click', () => {
-        const audio = document.getElementById('bg-music');
-        audio.play()
-            .then(() => {
-                currentStep = 2;
-                showStep(currentStep);
-            })
-            .catch(err => {
-                console.warn("Autoplay issue:", err);
-                currentStep = 2;
-                showStep(currentStep);
-            });
-    });
+    document.getElementById('start-btn').addEventListener('click', async () => {
+    const audio = document.getElementById('bg-music');
+    try {
+        audio.volume = 0.7;
+        await audio.play();
+        console.log("✅ Music is playing!");
+    } catch (err) {
+        console.error("❌ Music failed to play:", err);
+    }
+
+    currentStep = 2;
+    showStep(currentStep);
+});
     
     document.getElementById('confetti-btn').addEventListener('click', () => {
         confetti({
@@ -547,6 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 </html>
+
 
 
 
