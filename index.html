@@ -178,16 +178,30 @@
 
         #floating-collage-message {
             position: absolute;
-            bottom: 8vh;
-            width: 100vw;
-            text-align: center;
+            bottom: 7vh;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 18px 35px;
             font-size: 2rem;
             font-weight: bold;
             color: #EC4899;
             opacity: 0;
-            transition: opacity 1s;
             pointer-events: none;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 6px 36px 0 rgba(47,180,255,0.10), 0 2px 10px #fff, 0 0 2px #f9a8d4;
+            border: 2px solid #60a5fa; /* sky blue */
             text-shadow: 0 2px 10px #fff, 0 0 2px #f9a8d4;
+            z-index: 12;
+            transition: opacity 1.2s cubic-bezier(.45,1,.3,1);
+            background-clip: padding-box;
+        }
+        @media (max-width: 600px) {
+            #floating-collage-message {
+                font-size: 1.1rem;
+                padding: 10px 18px;
+                border-radius: 19px;
+            }
         }
         .floating-collage-img {
             width: 120px;
@@ -214,9 +228,6 @@
                 width: 80px;
                 height: 80px;
                 margin: -40px 0 0 -40px;
-            }
-            #floating-collage-message {
-                font-size: 1.2rem;
             }
         }
     </style>
@@ -438,7 +449,7 @@
         document.getElementById('start-btn').addEventListener('click', () => {
             const music = document.getElementById('bg-music');
             if (music) {
-                music.volume = 0.6;
+                music.volume = 0.7;
                 music.play().catch(() => {});
             }
             currentStep = 2;
@@ -494,6 +505,8 @@
             // Remove previous images
             document.querySelectorAll('.floating-collage-img').forEach(img => img.remove());
             floatingMsg.style.opacity = 0;
+            floatingMsg.style.transition = 'opacity 0.1s'; // instant hide for next use
+            floatingMsg.style.background = 'white';
             floatingCollage.style.display = 'block';
 
             // Add images in random positions & rotation
@@ -503,7 +516,6 @@
                 img.src = p.src;
                 img.alt = p.alt;
                 img.className = 'floating-collage-img';
-                // Position off-screen initially
                 img.style.opacity = 0;
                 img.style.left = '50vw';
                 img.style.top = '50vh';
@@ -538,13 +550,19 @@
                     img.style.transform = `scale(1.22) rotate(${parseFloat(img.style.transform.match(/-?\d+\.?\d*/g)?.[1] || 0) + 18}deg)`;
                     setTimeout(() => animateOut(idx + 1), 120);
                 } else {
-                    floatingMsg.innerText = "Thanks for being the best girl in my LIFE!";
-                    floatingMsg.style.opacity = 1;
+                    floatingMsg.innerText = "I love you so much! :)..Don't you?!❤️";
+                    floatingMsg.style.background = "white";
+                    floatingMsg.style.border = "2px solid #60a5fa";
+                    floatingMsg.style.boxShadow = "0 6px 36px 0 rgba(47,180,255,0.10), 0 2px 10px #fff, 0 0 2px #f9a8d4";
+                    floatingMsg.style.borderRadius = "30px";
+                    floatingMsg.style.color = "#EC4899";
+                    floatingMsg.style.opacity = 0;
+                    floatingMsg.style.transition = 'opacity 1.2s cubic-bezier(.45,1,.3,1)';
+                    // fade in
                     setTimeout(() => {
-                        floatingCollage.style.display = 'none';
-                        floatingMsg.style.opacity = 0;
-                        imgNodes.forEach(img => img.remove());
-                    }, 2600);
+                        floatingMsg.style.opacity = 1;
+                    }, 80);
+                    // Do NOT hide message or collage anymore
                 }
             }
             showNext();
@@ -602,4 +620,3 @@
     </script>
 </body>
 </html>
-
