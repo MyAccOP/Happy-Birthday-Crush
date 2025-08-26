@@ -401,11 +401,19 @@
 
         // Button event listeners
         document.getElementById('start-btn').addEventListener('click', () => {
-          document.getElementById('bg-music').play().catch(err => {
-  console.warn("Autoplay issue:", err);
-            currentStep = 2;
-            showStep(currentStep);
-        });
+  const audio = document.getElementById('bg-music');
+  audio.play()
+    .then(() => {
+      currentStep = 2;
+      showStep(currentStep);
+    })
+    .catch(err => {
+      console.warn("Autoplay issue:", err);
+      // Still advance even if audio doesn't play
+      currentStep = 2;
+      showStep(currentStep);
+    });
+});
 
         document.getElementById('next-btn-2').addEventListener('click', () => {
             currentStep = 3;
@@ -487,4 +495,5 @@
 
 
 </html>
+
 
