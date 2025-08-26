@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
-          <audio id="bg-music" src="assets/music.mp3" loop></audio>
+        
 
             margin: 0;
             overflow: hidden;
@@ -20,7 +20,7 @@
             touch-action: manipulation;
              background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
         }
-
+        
         #app {
             position: relative;
             width: 100%;
@@ -172,6 +172,7 @@
 
 <body>
     <div id="app">
+        <audio id="bg-music" src="assets/music.mp3" loop></audio>
         <div id="canvas-container"></div>
 
         <div id="progress-container">
@@ -372,47 +373,100 @@
         });
 
         // Step Navigation
-        let currentStep = 1;
-        const totalSteps = 5;
+let currentStep = 1;
+const totalSteps = 5;
 
-        function updateProgressBar() {
-            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-        }
+function updateProgressBar() {
+    const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+}
 
-        function showStep(stepNumber) {
-            // Hide all steps
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
+function showStep(stepNumber) {
+    document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+    });
+
+    document.getElementById(`step${stepNumber}`).classList.add('active');
+    updateProgressBar();
+
+    if (stepNumber === totalSteps) {
+        document.getElementById('confetti-btn').classList.add('animate-pulse');
+    }
+}
+
+// ✅ FIXED EVENT LISTENERS
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('start-btn').addEventListener('click', () => {
+        const audio = document.getElementById('bg-music');
+        audio.play()
+            .then(() => {
+                currentStep = 2;
+                showStep(currentStep);
+            })
+            .catch(err => {
+                console.warn("Autoplay issue:", err);
+                currentStep = 2;
+                showStep(currentStep);
+            });
+    });
+    
+    document.getElementById('confetti-btn').addEventListener('click', () => {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb']
+        });
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 30,
+                spread: 60,
+                origin: { y: 0.5 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
+            });
+        }, 300);
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 20,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
             });
 
-            // Show current step
-            document.getElementById(`step${stepNumber}`).classList.add('active');
+            confetti({
+                particleCount: 20,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                shapes: ['heart'],
+                colors: ['#ff0000', '#ff69b4']
+            });
+        }, 600);
 
-            // Update progress bar
-            updateProgressBar();
+        hearts.forEach(heart => {
+            gsap.to(heart.position, {
+                y: heart.position.y - 30,
+                duration: 3,
+                ease: "power1.out"
+            });
 
-            // Special effect for last step
-            if (stepNumber === totalSteps) {
-                document.getElementById('confetti-btn').classList.add('animate-pulse');
-            }
-        }
-
-        // Button event listeners
-        document.getElementById('start-btn').addEventListener('click', () => {
-  const audio = document.getElementById('bg-music');
-  audio.play()
-    .then(() => {
-      currentStep = 2;
-      showStep(currentStep);
-    })
-    .catch(err => {
-      console.warn("Autoplay issue:", err);
-      // Still advance even if audio doesn't play
-      currentStep = 2;
-      showStep(currentStep);
+            gsap.to(heart.material, {
+                opacity: 0,
+                duration: 3,
+                ease: "power1.out"
+            });
+        });
     });
+
+    // Initialize progress bar once DOM is ready
+    updateProgressBar();
 });
+
         document.getElementById('next-btn-2').addEventListener('click', () => {
             currentStep = 3;
             showStep(currentStep);
@@ -493,6 +547,7 @@
 
 
 </html>
+
 
 
 
