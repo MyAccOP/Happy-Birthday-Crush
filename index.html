@@ -16,7 +16,7 @@
             font-family: 'Inter', sans-serif;
             height: 100vh;
             touch-action: manipulation;
-             background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
+            background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
         }
 
         #app {
@@ -165,14 +165,124 @@
             height: 100%;
             z-index: 1;
         }
-        #photo-collage {
-            z-index: 20;
-        }
-        #photo-collage.show {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
 
+        /* Collage Overlay Styles */
+        #collage-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.75);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        #collage-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .collage-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 700px;
+            width: 95vw;
+            max-height: 90vh;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: collage-in 0.7s cubic-bezier(.22,1,.36,1) forwards;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        #collage-overlay.active .collage-content {
+            animation: collage-in 0.7s cubic-bezier(.22,1,.36,1) forwards;
+        }
+        @keyframes collage-in {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 0 auto;
+            margin-bottom: 18px;
+        }
+        .collage-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.09);
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+            animation: collage-img-in 0.7s cubic-bezier(.22,1,.36,1) forwards;
+        }
+        /* Stagger effect for images */
+        .collage-img:nth-child(1) { animation-delay: 0.08s; }
+        .collage-img:nth-child(2) { animation-delay: 0.18s; }
+        .collage-img:nth-child(3) { animation-delay: 0.28s; }
+        .collage-img:nth-child(4) { animation-delay: 0.38s; }
+        .collage-img:nth-child(5) { animation-delay: 0.48s; }
+        .collage-img:nth-child(6) { animation-delay: 0.58s; }
+        .collage-img:nth-child(7) { animation-delay: 0.68s; }
+        .collage-img:nth-child(8) { animation-delay: 0.78s; }
+        .collage-img:nth-child(9) { animation-delay: 0.88s; }
+        @keyframes collage-img-in {
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        .collage-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #EC4899;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .collage-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: #f3e8ff;
+            color: #EC4899;
+            border: none;
+            font-size: 1.8rem;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.13);
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .collage-close:hover {
+            background: #f9a8d4;
+        }
+        @media (max-width: 600px) {
+            .collage-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .collage-img {
+                width: 95px;
+                height: 95px;
+            }
+        }
     </style>
 </head>
 
@@ -257,29 +367,36 @@
                 <button class="btn" id="confetti-btn">Celebrate!</button>
                 <p class="mt-8 text-gray-500">Made with ❤️ just for you</p>
             </div>
-            <div id="photo-collage" class="opacity-0 transform translate-y-[-50px] transition-all duration-1000 ease-out mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
-                <img src="a1.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="a2.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="a3.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="a4.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
-            </div>
-          </div>
         </div>
+        
+        <!-- Collage Overlay: Add your favorite photos below -->
+        <div id="collage-overlay">
+            <div class="collage-content">
+                <button class="collage-close" id="close-collage" title="Close">&times;</button>
+                <div class="collage-title">Our Memories</div>
+                <div class="collage-grid">
+                    <!-- Replace src attributes with your own images -->
+                    <img class="collage-img" src="a1.jpg" alt="memory 1">
+                    <img class="collage-img" src="a2.jpg" alt="memory 2">
+                    <img class="collage-img" src="a3.jpg" alt="memory 3">
+                    <img class="collage-img" src="a4.jpg" alt="memory 4">
+                    <img class="collage-img" src="a5.jpg" alt="memory 5">
+                    <img class="collage-img" src="a6.jpg" alt="memory 6">
+                    <img class="collage-img" src="a7.jpg" alt="memory 7">
+                    <img class="collage-img" src="a8.jpg" alt="memory 8">
+                    <img class="collage-img" src="a9.jpg" alt="memory 9">
+                </div>
+                <div class="text-center text-pink-500 font-semibold">Every picture is a story of us ❤️</div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Three.js Heart Background
         const container = document.getElementById('canvas-container');
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-
-        // ✅ Force the canvas behind other content
-        renderer.domElement.style.position = 'absolute';
-        renderer.domElement.style.top = '0';
-        renderer.domElement.style.left = '0';
-        renderer.domElement.style.zIndex = '0'; // 👈 Lower than #content
-
         container.appendChild(renderer.domElement);
-
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -439,10 +556,28 @@
             showStep(currentStep);
         });
 
+        // Collage Overlay functionality
+        const collageOverlay = document.getElementById('collage-overlay');
+        const closeCollageBtn = document.getElementById('close-collage');
+
+        function showCollage() {
+            collageOverlay.classList.add('active');
+            // Optional: scroll to top inside overlay for mobile
+            collageOverlay.querySelector('.collage-content').scrollTop = 0;
+        }
+        function hideCollage() {
+            collageOverlay.classList.remove('active');
+        }
+        closeCollageBtn.addEventListener('click', hideCollage);
+        // Also close when clicking outside collage-content
+        collageOverlay.addEventListener('click', (e) => {
+            if (e.target === collageOverlay) {
+                hideCollage();
+            }
+        });
+
         // Confetti button
         document.getElementById('confetti-btn').addEventListener('click', () => {
-            const collage = document.getElementById('photo-collage');
-            collage.classList.add('show');
             // Standard confetti
             confetti({
                 particleCount: 150,
@@ -497,6 +632,9 @@
                     ease: "power1.out"
                 });
             });
+
+            // Show animated collage after a short delay
+            setTimeout(showCollage, 1200); // Wait for confetti and hearts animation
         });
 
         // Initialize progress bar
@@ -504,10 +642,4 @@
     </script>
 </body>
 
-
 </html>
-
-
-
-
-
