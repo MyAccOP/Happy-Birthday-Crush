@@ -165,6 +165,14 @@
             height: 100%;
             z-index: 1;
         }
+        #photo-collage {
+    z-index: 20;
+}
+#photo-collage.show {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
     </style>
 </head>
 
@@ -249,6 +257,13 @@
                 <button class="btn" id="confetti-btn">Celebrate!</button>
                 <p class="mt-8 text-gray-500">Made with ❤️ just for you</p>
             </div>
+            <div id="photo-collage" class="opacity-0 transform translate-y-[-50px] transition-all duration-1000 ease-out mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+    <img src="a1.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+    <img src="a2.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+    <img src="a3.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+    <img src="a4.jpg" class="rounded-lg shadow-lg w-full h-auto object-cover" />
+</div>
+
         </div>
     </div>
 
@@ -419,6 +434,8 @@
 
         // Confetti button
         document.getElementById('confetti-btn').addEventListener('click', () => {
+            const collage = document.getElementById('photo-collage');
+collage.classList.add('show');
             // Standard confetti
             confetti({
                 particleCount: 150,
@@ -482,5 +499,6 @@
 
 
 </html>
+
 
 
