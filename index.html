@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,14 +17,12 @@
             touch-action: manipulation;
             background: linear-gradient(135deg, #f9a8d4, #f3e8ff);
         }
-
         #app {
             position: relative;
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
-
         #content {
             position: relative;
             z-index: 10;
@@ -38,7 +35,6 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
         .step {
             position: absolute;
             width: 100%;
@@ -54,13 +50,11 @@
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
-
         .step.active {
             opacity: 1;
             transform: translateY(0);
             pointer-events: all;
         }
-
         .btn {
             background: linear-gradient(135deg, #ec4899, #f43f5e);
             color: white;
@@ -73,55 +67,34 @@
             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
             transition: all 0.3s ease;
         }
-
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
         }
-
         .btn:active {
             transform: translateY(0);
         }
-
         .text-gradient {
             background: linear-gradient(135deg, #ec4899, #f43f5e, #f59e0b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
         .heart-beat {
             animation: heartbeat 1.5s ease-in-out infinite;
         }
-
         @keyframes heartbeat {
-            0% {
-                transform: scale(1);
-            }
-
-            25% {
-                transform: scale(1.1);
-            }
-
-            50% {
-                transform: scale(1);
-            }
-
-            75% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1);}
+            25% { transform: scale(1.1);}
+            50% { transform: scale(1);}
+            75% { transform: scale(1.1);}
+            100% { transform: scale(1);}
         }
-
         .emoji {
             font-size: 3rem;
             margin-bottom: 20px;
             display: inline-block;
         }
-
         .reason-card {
             background: white;
             border-radius: 15px;
@@ -130,12 +103,10 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
-
         .reason-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-
         #progress-container {
             position: fixed;
             top: 20px;
@@ -148,7 +119,6 @@
             border-radius: 3px;
             z-index: 100;
         }
-
         #progress-bar {
             height: 100%;
             width: 0%;
@@ -156,7 +126,6 @@
             border-radius: 3px;
             transition: width 0.5s ease;
         }
-
         #canvas-container {
             position: fixed;
             top: 0;
@@ -165,8 +134,6 @@
             height: 100%;
             z-index: 1;
         }
-
-        /* Floating collage styles */
         #floating-collage {
             display: none;
             position: fixed;
@@ -177,12 +144,10 @@
             pointer-events: none;
             z-index: 300;
         }
-
         #floating-collage-message {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            /* Place directly above the "Made with..." text */
             bottom: 62px;
             padding: 18px 35px;
             font-size: 2rem;
@@ -225,7 +190,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            margin: -60px 0 0 -60px; /* center by default, will be overridden */
+            margin: -60px 0 0 -60px;
             background: #fff;
             z-index: 1;
             transform: scale(0.7) rotate(0deg);
@@ -249,14 +214,12 @@
         }
     </style>
 </head>
-
 <body>
     <div id="app">
         <div id="canvas-container"></div>
         <div id="progress-container">
             <div id="progress-bar"></div>
         </div>
-
         <div id="content">
             <!-- Step 1: Initial Reveal -->
             <div class="step active" id="step1">
@@ -265,7 +228,6 @@
                 <p class="text-xl text-gray-700 mb-8">I made something special for you... I would suggest you recording it to keep it as a memory!</p>
                 <button class="btn" id="start-btn">Let's Begin</button>
             </div>
-
             <!-- Step 2: Birthday Message -->
             <div class="step" id="step2">
                 <div class="emoji">🎉</div>
@@ -276,7 +238,6 @@
                 </p>
                 <button class="btn" id="next-btn-2">What makes you special?</button>
             </div>
-
             <!-- Step 3: Reasons You're Amazing -->
             <div class="step" id="step3">
                 <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gradient">Here's why you're incredible</h2>
@@ -300,7 +261,6 @@
                 </div>
                 <button class="btn" id="next-btn-3">A Little Surprise for you!</button>
             </div>
-
             <!-- Step 4: Memory Lane -->
             <div class="step" id="step4">
                 <div class="emoji">📸</div>
@@ -315,7 +275,6 @@
                 </p>
                 <button class="btn" id="next-btn-4">One Last Thing</button>
             </div>
-
             <!-- Step 5: Final Wish -->
             <div class="step" id="step5">
                 <div class="emoji">🎂</div>
@@ -330,17 +289,47 @@
                 <button class="btn" id="confetti-btn">Celebrate!</button>
                 <p class="mt-8 text-gray-500 made-with-text">Click on Celebrate!!</p>
             </div>
+            <!-- Step 6: Scratch Card Surprise -->
+            <div class="step" id="step6">
+                <div class="emoji">🎁</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Scratch to Reveal Your Secret Message!</h2>
+                <div style="display: flex; justify-content: center; align-items: center; flex-direction:column;">
+                    <div style="position:relative; width:310px; height:120px;">
+                        <canvas id="scratch-card" width="310" height="120" style="border-radius:20px; background:#fff; touch-action: none; box-shadow:0 2px 12px #f9a8d4;"></canvas>
+                        <div id="scratch-message" style="pointer-events:none; position:absolute; left:0; top:0; width:100%; height:100%; display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:bold;color:#EC4899;text-align:center;">
+                            You are my favorite person in the whole world! 🌎❤️<br>Happy Birthday, Ayushi!
+                        </div>
+                    </div>
+                    <button class="btn" id="next-btn-6" style="margin-top:36px;">Take a Birthday Selfie!</button>
+                </div>
+            </div>
+            <!-- Step 7: Polaroid Camera Birthday Selfie -->
+            <div class="step" id="step7">
+                <div class="emoji">📷</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Take a Birthday Selfie!</h2>
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                    <div id="polaroid-frame" style="width:240px; height:290px; background:#fff; border-radius:18px; box-shadow:0 4px 24px #f9a8d4; padding:8px 8px 44px 8px; position:relative; display:flex; flex-direction:column; align-items:center;">
+                        <video id="selfie-video" width="224" height="224" autoplay playsinline style="border-radius:12px; background:#eee;"></video>
+                        <canvas id="selfie-canvas" width="224" height="224" style="display:none; border-radius:12px;position:absolute;top:8px;left:8px;"></canvas>
+                        <div style="width:100%; text-align:center; font-size:1rem; font-weight:600; color:#f43f5e; margin-top:6px;">
+                            <span>Ayushi's Birthday Polaroid</span>
+                        </div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/616/616489.png" alt="heart" style="width:38px;position:absolute;bottom:12px;right:18px;opacity:0.7;">
+                    </div>
+                    <button class="btn" id="capture-btn" style="margin-top:18px;">Capture Selfie</button>
+                    <a class="btn" id="download-selfie-btn" style="margin-top:12px; display:none;">Download Polaroid</a>
+                    <button class="btn" id="final-btn" style="margin-top:28px;">Finish</button>
+                </div>
+            </div>
         </div>
-
         <!-- Floating collage -->
         <div id="floating-collage">
             <div id="floating-collage-message"></div>
         </div>
         <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
     </div>
-
     <script>
-        // Three.js Heart Animation (unchanged from before)
+        // Three.js Heart Animation (unchanged)
         const container = document.getElementById('canvas-container');
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -448,7 +437,7 @@
 
         // Step Navigation
         let currentStep = 1;
-        const totalSteps = 5;
+        const totalSteps = 7;
         function updateProgressBar() {
             const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
@@ -459,7 +448,7 @@
             });
             document.getElementById(`step${stepNumber}`).classList.add('active');
             updateProgressBar();
-            if (stepNumber === totalSteps) {
+            if (stepNumber === 5) {
                 document.getElementById('confetti-btn').classList.add('animate-pulse');
             }
         }
@@ -506,7 +495,6 @@
         }
 
         function getRandomPositionAndRotation(idx, total) {
-            // Distribute images in a rough "ellipse" in center
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
             const angle = (idx / total) * 2 * Math.PI + randomInRange(-0.2, 0.2);
@@ -519,14 +507,12 @@
         }
 
         function runFloatingCollage() {
-            // Remove previous images
             document.querySelectorAll('.floating-collage-img').forEach(img => img.remove());
             floatingMsg.style.opacity = 0;
-            floatingMsg.style.transition = 'opacity 0.1s'; // instant hide for next use
+            floatingMsg.style.transition = 'opacity 0.1s';
             floatingMsg.style.background = 'white';
             floatingCollage.style.display = 'block';
 
-            // Add images in random positions & rotation
             const imgNodes = [];
             collagePhotos.forEach((p, i) => {
                 const img = document.createElement('img');
@@ -541,7 +527,6 @@
                 imgNodes.push(img);
             });
 
-            // Animate in one by one to random positions
             let i = 0;
             function showNext() {
                 if (i < imgNodes.length) {
@@ -575,17 +560,15 @@
                     floatingMsg.style.color = "#EC4899";
                     floatingMsg.style.opacity = 0;
                     floatingMsg.style.transition = 'opacity 1.2s cubic-bezier(.45,1,.3,1)';
-                    // fade in
                     setTimeout(() => {
                         floatingMsg.style.opacity = 1;
                     }, 80);
-                    // Do NOT hide message or collage anymore
                 }
             }
             showNext();
         }
 
-        // Celebrate button triggers
+        // Celebrate button triggers and go to scratch card
         document.getElementById('confetti-btn').addEventListener('click', () => {
             confetti({
                 particleCount: 150,
@@ -632,14 +615,126 @@
                     ease: "power1.out"
                 });
             });
-            setTimeout(runFloatingCollage, 1200); // Show floating collage after confetti
+            setTimeout(runFloatingCollage, 1200);
+            // After collage, go to scratch card
+            setTimeout(() => {
+                currentStep = 6;
+                showStep(currentStep);
+                setTimeout(initScratchCard, 420);
+            }, 4200);
+        });
+
+        // ---- Scratch Card Logic ----
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-card');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            // Silver overlay
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#C0C0C0';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.font = "bold 1.4rem Inter, Arial";
+            ctx.fillStyle = "#666";
+            ctx.textAlign = "center";
+            ctx.fillText("Scratch Here!", width/2, height/2 + 12);
+
+            let isDrawing = false;
+            let scratched = 0;
+
+            function scratch(x, y) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 18, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.closePath();
+                ctx.globalCompositeOperation = 'source-over';
+            }
+
+            function handlePointer(e) {
+                const rect = canvas.getBoundingClientRect();
+                let x, y;
+                if (e.touches) {
+                    x = e.touches[0].clientX - rect.left;
+                    y = e.touches[0].clientY - rect.top;
+                } else {
+                    x = e.offsetX;
+                    y = e.offsetY;
+                }
+                scratch(x, y);
+
+                // Count scratched pixels for "auto-complete"
+                const img = ctx.getImageData(0,0,width,height).data;
+                let count = 0;
+                for (let i=3; i<img.length; i+=4) if (img[i]===0) count++;
+                scratched = count/(width*height) * 100;
+                if(scratched > 46) {
+                    ctx.clearRect(0,0,width,height);
+                    canvas.style.pointerEvents = "none";
+                }
+            }
+
+            canvas.onmousedown = e => { isDrawing=true; handlePointer(e); }
+            canvas.onmousemove = e => { if(isDrawing) handlePointer(e); }
+            canvas.onmouseup = e => { isDrawing=false; }
+            canvas.onmouseleave = e => { isDrawing=false; }
+            canvas.ontouchstart = e => { isDrawing=true; handlePointer(e);}
+            canvas.ontouchmove = e => { if(isDrawing) handlePointer(e);}
+            canvas.ontouchend = e => { isDrawing=false; }
+            canvas.style.pointerEvents = "auto";
+        }
+
+        document.getElementById('next-btn-6').addEventListener('click', () => {
+            currentStep = 7;
+            showStep(currentStep);
+            setTimeout(initSelfie, 300);
+        });
+
+        // ---- Webcam Polaroid Selfie Logic ----
+        let selfieStream = null;
+        function initSelfie() {
+            const video = document.getElementById('selfie-video');
+            const canvas = document.getElementById('selfie-canvas');
+            const captureBtn = document.getElementById('capture-btn');
+            const dlBtn = document.getElementById('download-selfie-btn');
+
+            canvas.style.display = 'none';
+            video.style.display = 'block';
+            dlBtn.style.display = 'none';
+
+            // Start webcam
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                    video.srcObject = stream;
+                    selfieStream = stream;
+                }).catch(() => {
+                    video.style.display='none';
+                    captureBtn.style.display='none';
+                    alert('Could not access your camera. Try on a device with a webcam!');
+                });
+            }
+
+            captureBtn.onclick = function() {
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                canvas.style.display = 'block';
+                video.style.display = 'none';
+                dlBtn.style.display = 'inline-block';
+                // Stop stream for privacy
+                if(selfieStream) {
+                    selfieStream.getTracks().forEach(track => track.stop());
+                    selfieStream = null;
+                }
+                // Set up download
+                dlBtn.href = canvas.toDataURL('image/png');
+                dlBtn.download = "ayushi-birthday-polaroid.png";
+                dlBtn.textContent = "Download Polaroid";
+            };
+        }
+
+        document.getElementById('final-btn').addEventListener('click', () => {
+            alert("Hope you loved it! 🎈");
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
