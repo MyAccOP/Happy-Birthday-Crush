@@ -303,29 +303,11 @@
                             You are my favorite person in the whole world! 🌎❤️<br>Happy Birthday, Ayushi!
                         </div>
                     </div>
-                    <button class="btn" id="next-btn-6" style="margin-top:36px;">Take a Birthday Selfie!</button>
+                    <button class="btn" id="next-btn-6" style="margin-top:36px;">One more thing!</button>
                 </div>
             </div>
-            <!-- Step 7: Polaroid Camera Birthday Selfie -->
+            <!-- Step 7: Final Love Message -->
             <div class="step" id="step7">
-                <div class="emoji">📷</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Take a Birthday Selfie!</h2>
-                <div style="display:flex;flex-direction:column;align-items:center;">
-                    <div id="polaroid-frame" style="width:240px; height:290px; background:#fff; border-radius:18px; box-shadow:0 4px 24px #f9a8d4; padding:8px 8px 44px 8px; position:relative; display:flex; flex-direction:column; align-items:center;">
-                        <video id="selfie-video" width="224" height="224" autoplay playsinline style="border-radius:12px; background:#eee;"></video>
-                        <canvas id="selfie-canvas" width="224" height="224" style="display:none; border-radius:12px;position:absolute;top:8px;left:8px;"></canvas>
-                        <div style="width:100%; text-align:center; font-size:1rem; font-weight:600; color:#f43f5e; margin-top:6px;">
-                            <span>Ayushi's Birthday Polaroid</span>
-                        </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/616/616489.png" alt="heart" style="width:38px;position:absolute;bottom:12px;right:18px;opacity:0.7;">
-                    </div>
-                    <button class="btn" id="capture-btn" style="margin-top:18px;">Capture Selfie</button>
-                    <a class="btn" id="download-selfie-btn" style="margin-top:12px; display:none;">Download Polaroid</a>
-                    <button class="btn" id="final-btn" style="margin-top:28px;">Finish</button>
-                </div>
-            </div>
-            <!-- Step 8: Final Love Message -->
-            <div class="step" id="step8">
                 <div class="emoji heart-beat" style="font-size:3.5rem;">❤️</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Just One More Thing...</h2>
                 <div style="background: white; border: 2px solid #60a5fa; box-shadow: 0 6px 36px 0 rgba(47,180,255,0.10), 0 2px 10px #fff, 0 0 2px #f9a8d4; border-radius: 30px; color: #EC4899; font-size: 2rem; padding: 36px 28px; margin: 0 auto 18px auto; max-width: 420px;">
@@ -449,7 +431,7 @@
 
         // Step Navigation
         let currentStep = 1;
-        const totalSteps = 8;
+        const totalSteps = 7;
         function updateProgressBar() {
             const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
@@ -631,11 +613,12 @@
             const height = canvas.height;
             const msgDiv = document.getElementById('scratch-message');
             ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = '#C0C0C0';
+            // Pink overlay!
+            ctx.fillStyle = "#f472b6"; // Tailwind pink-400
             ctx.fillRect(0, 0, width, height);
 
             ctx.font = "bold 1.4rem Inter, Arial";
-            ctx.fillStyle = "#666";
+            ctx.fillStyle = "#fff";
             ctx.textAlign = "center";
             ctx.fillText("Scratch Here!", width/2, height/2 + 12);
 
@@ -689,53 +672,6 @@
 
         document.getElementById('next-btn-6').addEventListener('click', () => {
             currentStep = 7;
-            showStep(currentStep);
-            setTimeout(initSelfie, 300);
-        });
-
-        // ---- Webcam Polaroid Selfie Logic ----
-        let selfieStream = null;
-        function initSelfie() {
-            const video = document.getElementById('selfie-video');
-            const canvas = document.getElementById('selfie-canvas');
-            const captureBtn = document.getElementById('capture-btn');
-            const dlBtn = document.getElementById('download-selfie-btn');
-
-            canvas.style.display = 'none';
-            video.style.display = 'block';
-            dlBtn.style.display = 'none';
-
-            // Start webcam
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                    video.srcObject = stream;
-                    selfieStream = stream;
-                }).catch(() => {
-                    video.style.display='none';
-                    captureBtn.style.display='none';
-                    alert('Could not access your camera. Try on a device with a webcam!');
-                });
-            }
-
-            captureBtn.onclick = function() {
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                canvas.style.display = 'block';
-                video.style.display = 'none';
-                dlBtn.style.display = 'inline-block';
-                // Stop stream for privacy
-                if(selfieStream) {
-                    selfieStream.getTracks().forEach(track => track.stop());
-                    selfieStream = null;
-                }
-                // Set up download
-                dlBtn.href = canvas.toDataURL('image/png');
-                dlBtn.download = "ayushi-birthday-polaroid.png";
-                dlBtn.textContent = "Download Polaroid";
-            };
-        }
-
-        document.getElementById('final-btn').addEventListener('click', () => {
-            currentStep = 8;
             showStep(currentStep);
         });
     </script>
