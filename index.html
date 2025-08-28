@@ -225,21 +225,14 @@
             justify-content:center;
         }
         #gift-overlay .gift-inner {
-            background: none;
-        }
-        /* Pink overlay and white text for gifts */
-        #gift-overlay .gift-inner {
-            background: linear-gradient(to right, #f472b6, #f43f5e, #fb7185);
+            position:relative;
+            background:white;
             border-radius:24px;
             padding:36px 24px;
             box-shadow:0 8px 40px #ec489977;
             text-align:center;
             max-width: 97vw;
         }
-        #gift-overlay .gift-inner h2 {
-            color: #fff;
-        }
-        /* Gifts: larger and always horizontal */
         #gift-items {
             display:flex;
             flex-direction: row;
@@ -249,18 +242,10 @@
             width:100%;
         }
         #gift-items img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px #f9a8d4;
+            width:150px; height:150px; object-fit:cover; border-radius:16px; box-shadow:0 2px 12px #f9a8d4;
         }
         #gift-items .gift-name {
-            margin-top: 20px;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: #fff; /* White text on pink background */
-            text-shadow: 0 2px 10px #ec4899, 0 0 2px #f9a8d4;
+            margin-top:20px; font-size:1.6rem; font-weight:900; color:#ec4899;
         }
         #gift-items > div {
             display: flex;
@@ -268,10 +253,11 @@
             align-items: center;
             min-width: 0;
         }
+        /* Keep gifts horizontal even on small screens */
         @media (max-width: 600px) {
             #gift-items {
                 flex-direction: row !important;
-                gap: 10px;
+                gap: 40px;
                 width: 100%;
                 max-width: 96vw;
             }
@@ -279,18 +265,13 @@
                 padding: 14px 2vw;
             }
             #gift-items img {
-                width: 110px;
-                height: 110px;
+                width: 100px;
+                height: 100px;
             }
             #gift-items .gift-name {
                 font-size: 1.22rem;
-                margin-top: 12px;
+                margin-top:12px;
             }
-        }
-        /* Scratch message hidden by default, flex when revealed */
-        #scratch-message {
-            display: none;
-            /* rest of your styles... */
         }
     </style>
 </head>
@@ -385,8 +366,8 @@
             </div>
             <!-- Gift Overlay -->
             <div id="gift-overlay">
-                <div class="gift-inner bg-gradient-to-r from-pink-400 to-rose-400" style="max-width: 97vw; border-radius:24px; padding:36px 24px; box-shadow:0 8px 40px #ec489977; text-align:center;">
-                    <h2 class="text-2xl md:text-3xl font-bold mb-6" style="color: #fff;">Here are your Favourite Things as Your Gift!</h2>
+                <div class="gift-inner">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gradient mb-6">Here are your Favourite Things as Your Gift!</h2>
                     <div id="gift-items"></div>
                     <button class="btn" id="close-gift-btn" style="margin-top:32px;">Close</button>
                 </div>
@@ -401,7 +382,7 @@
                             style="border-radius:20px; background:#fff; touch-action: none; box-shadow:0 2px 12px #f9a8d4;"></canvas>
                         <div
                             id="scratch-message"
-                            style="pointer-events:none; position:absolute; left:0; top:0; width:100%; height:100%; display:none;align-items:center;justify-content:center;font-size:1.3rem;font-weight:bold; color:#EC4899; text-align:center; background:transparent;">
+                            style="pointer-events:none; position:absolute; left:0; top:0; width:100%; height:100%; display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:bold; color:#EC4899; text-align:center; background:transparent;">
                             I LOVE YOU SO MUCH SHRI SAKHI!❤️ Don't you?! ;)
                         </div>
                     </div>
@@ -757,6 +738,7 @@
             }, 250);
         }
 
+
         // ---- Scratch Card Logic ----
         function initScratchCard() {
             const canvas = document.getElementById('scratch-card');
@@ -775,7 +757,7 @@
 
             let isDrawing = false;
             let scratched = 0;
-            msgDiv.style.display = "none"; // Hide at start
+            msgDiv.style.opacity = 0.04;
 
             function scratch(x, y) {
                 ctx.globalCompositeOperation = 'destination-out';
@@ -807,7 +789,7 @@
                     ctx.clearRect(0,0,width,height);
                     canvas.style.pointerEvents = "none";
                     // Show the message clearly when scratching is done!
-                    msgDiv.style.display = "flex";
+                    msgDiv.style.opacity = 1;
                 }
             }
 
